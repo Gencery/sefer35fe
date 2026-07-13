@@ -103,7 +103,7 @@ body {
     font-weight: bold;
     font-size: 3vh;
     //border-right: 1px solid #bbb;
-    border-right: 1px solid #f00;
+    border-right: 1px solid #bbb;
     padding: 1.5vh;
     align-self: center;
     min-width: 15%;
