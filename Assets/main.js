@@ -1,3 +1,13 @@
+let feServer = location.host;
+let beServer = "";
+
+if (feServer == "sefer35.com") {
+  beServer = "api.sefer35.com/"
+}
+else {
+  beServer = "http://localhost:3000/"
+}
+
 async function importResources() {
   //Fetching images
   let imagesMap = [
@@ -86,6 +96,60 @@ async function importResources() {
   return { img: imgsObj, data: data };
 }
 
+function expeditionsHTML(expeditions) {
+  let result = [];
+
+  Object.keys(expeditions).map(line => {
+    let lineObj = expeditions[line];
+    let dayObj = lineObj[Object.keys(lineObj)[0]];
+    let directionsObj = dayObj[Object.keys(dayObj)[0]];
+    let directionsResult = [];
+
+    let [startName, endName] = Object.keys(directionsObj.directions);
+
+    directionsResult = {
+      lineNo: line,
+      ...(startName && {
+        start: {
+          name: startName,
+          hours: directionsObj.directions[startName]
+        },
+      }),
+      ...(endName && {
+        end: {
+          name: endName,
+          hours: directionsObj.directions[endName]
+
+        }
+      })
+    }
+    result.push(directionsResult)
+  })
+
+
+  return result.reduce((acc, line) => acc +/*html*/`
+    <div class="card expedition">
+      <p class="lineNo">${line.lineNo}<p>
+      <div class="start">
+        <p class="name">${line.start.name}</p>
+        <div class="hours">
+          <p>${line.start.hours[0]}</p>
+          <p>${line.start.hours[1]}</p>
+        </div>
+      </div>
+      ${line.end ? /*html*/`
+        <div class="end">
+          <p class="name">${line.end.name}</p>
+          <div class="hours">
+            <p>${line.end.hours[0]}</p>
+            <p>${line.end.hours[1]}</p>
+          </div>
+      </div>
+      ` : ""}
+      
+    </div>`, "")
+}
+
 function getPage(page) {
   let header = () => /*html*/`
     <header>
@@ -105,168 +169,9 @@ function getPage(page) {
 
   let pages = {
     home: {
+
       content: /*html*/`
-      
-        <main class="home">
-          <div class="imgContainer">
-            <img src=${images.volga2.url} alt="">
-          </div>
-          <nav>
-            <a href="./?page=experience">Experience</a>
-            <a href="./?page=education">Education</a>
-            <a href="./?page=gallery">Gallery</a>
-            <a href="./?page=contact">Contact</a>
-          </nav>
-        </main>
-      
-    `
-    },
-    experience: {
-      content: /*html*/`
-      <main class="experience">
-        <div class="imgContainer">
-          <img src=${images.morpheusVolga.url} alt="">
-          <a href="./?page=acting" class="pill pill-red"></a>
-          <a href="./?page=software" class="pill pill-blue"></a>
-        </div>
-        <p class="prompt">
-          You take the blue pill, you learn about my <span class="blue">Software</span> experience. You take the red pill,
-          you stay in the Wonderland, and see my <span class="red">Acting</span> experience!
-          <br />
-          (click on a pill to choose)
-        </p>
-    </main>
-    `
-    },
-    education: {
-      content: /*html*/`
-        <main class="cardContainer education">
-        ${data.education.reduce((acc, current) => acc + /*html*/`
-          <div class="card">
-            <div class="info">
-              <div>
-                <h4>${current.SchoolName || ""}</h4>
-                <p>${current.Degree || ""}</p>
-                <p>${current.StartEnd || ""}</p>
-              </div>
-              ${current.logo ? /*html*/`<div class="logo">
-                <img src=${current.logo} />
-              </div>` : ""}
-            </div>
-          </div>
-        `, "")
-        }
-      </main>
-      `
-    },
-    acting: {
-      content: /*html*/`
-      <main class="cardContainer acting">
-        ${data.experience.acting.reduce((acc, current) => acc + /*html*/`
-          <div class="card">
-            <div class="info">
-              <div>
-                <h4>${current.name || ""}</h4>
-                <p>${current.role || ""}</p>
-                <p>${current.timeline || ""}</p>
-                <p>${current.Director || ""}</p>
-                <p>${current.Company || ""}</p>
-                <p>${current.Location || ""}</p>
-                <p>${current.note || ""}</p>
-                ${current.imdb ? /*html*/`
-                  <a href=${current.imdb}>IMDB Page</a>
-                ` : ""}
-              </div>
-              ${current.logo ? /*html*/`<div class="logo">
-                <img src=${current.logo} />
-              </div>` : ""}
-            </div>
-            ${current.video ? /*html*/`
-              <video controls>
-                <source src=${current.video} type="video/mp4">
-              </video>
-            ` : ""}
-          </div>
-        `, "")
-        }
-      </main>
-    `
-    },
-    gallery: {
-      content: /*html*/`
-      <main class="cardContainer gallery">
-        <div class="card">
-          <video controls poster="./Assets/img/volga2.jpg">
-            <source src="./Assets/video/showreel.mp4" type="video/mp4">
-          </video>
-        </div>
-        ${[1, 2, 3, 4, 5, 6].reduce((acc, cur) => {
-        return acc +/*html*/`
-            <div class="card">
-              <img src=${images["volga" + cur].url} alt="">
-            </div>
-          `
-      }, "")}
-        
-      </main>
-    `
-    },
-    software: {
-      content: /*html*/`
-      <main class="cardContainer software">
-        ${data.experience.software.reduce((acc, current) => acc + /*html*/`
-          <div class="card">
-            <div class="info">
-              <div>
-                <h4>${current.Title || ""}</h4>
-                <p>${current.CompanyName || ""}</p>
-                <p>${current.Schedule || ""}</p>
-                <p>${current.StartEnd || ""}</p>
-                <p>${current.Location || ""}</p>
-                <p>${current.WorkPlace || ""}</p>
-              </div>
-              ${current.CompanyLogo ? /*html*/`<div class="logo">
-                <img src=${current.CompanyLogo} />
-              </div>` : ""}
-            </div>
-            ${current.video ? /*html*/`
-              <video controls>
-                <source src=${current.video} type="video/mp4">
-              </video>
-            ` : ""}
-          </div>
-        `, "")
-        }
-      </main>
-    `
-    },
-    contact: {
-      content: /*html*/`
-      <main class="contact">
-        <div class="imgContainer">
-          <img src=${images.volga1.url} alt="">
-        </div>
-        <div class="links">
-          <a href="mailto:volcankay@gmail.com" class="socLink">
-            <img src="./Assets/img/logo/gmail.png" alt="gmail logo">
-          </a>
-          <a href="https://www.instagram.com/volgacankaya/" class="socLink">
-            <img src="./Assets/img/logo/instagram.png" alt="instagram logo">
-          </a>
-          <a href="https://www.youtube.com/@VolgaCanKaya/" class="socLink">
-            <img src="./Assets/img/logo/youtube.png" alt="youtube logo">
-          </a>
-          <a href="https://www.imdb.com/name/nm18108555/" class="socLink">
-            <img src="./Assets/img/logo/imdb.png" alt="imdb logo">
-          </a>
-          <a href="https://www.mandy.com/u/volgacankaya/" class="socLink">
-            <img src="./Assets/img/logo/mandy.avif" alt="mandy logo">
-          </a>
-          <a href="https://fishpond.ie/volgacankaya" class="socLink">
-            <img src="./Assets/img/logo/fishpond.jpg" alt="fishpond logo">
-          </a>
-        </div>
-      </main>
+
     `
     },
   }
@@ -308,9 +213,9 @@ let data = null;
 
 async function start() {
 
-  let resources = await importResources();
-  images = resources.img;
-  data = resources.data;
+  // let resources = await importResources();
+  // images = resources.img;
+  // data = resources.data;
 
 
   document.body.addEventListener("click", e => {
@@ -328,7 +233,13 @@ async function start() {
     router();
   })
   //document.addEventListener("DOMContentLoaded", router)
-  router();
+  //router();
 }
 
 start()
+
+fetch(`${beServer}busHours/505,267,49?next`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementsByTagName("main")[0].innerHTML = expeditionsHTML(data)
+  });
