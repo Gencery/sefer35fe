@@ -1,5 +1,5 @@
 :root {
-  --clr-main:
+  //--clr-main: 
 }
 
 /* width */
@@ -43,7 +43,7 @@ a:visited {
 
 html {
   overflow: hidden;
-  overscroll-behavior: none;
+  //overscroll-behavior: none;
   font-family: "Verdana", sans-serif;
   background-color: #000;
 }
@@ -55,21 +55,23 @@ body {
   border-radius: 2vh;
   padding: 1vh;
   border: 1px solid transparent;
-  background-color: #dfdfdf;
+  background-color: #ddd;
   display: flex;
   flex-direction: column;
 
   * {}
 
   header {
+    margin: 1vh 0;
+
     >p {
-      font-weight: bold;
-      margin: 1vh 0;
-      color: #111;
+      font-size: 2vh;
     }
+
   }
 
   main {
+    border-top: 1px solid #999;
     flex-grow: 1;
     overflow-y: auto;
   }
@@ -83,9 +85,10 @@ body {
 }
 
 .card {
-  border: 1px solid #111;
+  //border: 1px solid #111;
   border-radius: 2vh;
   margin: 1vh;
+  background-color: #eee;
 }
 
 .expedition {
@@ -98,6 +101,10 @@ body {
 
   >.lineNo {
     font-weight: bold;
+    font-size: 3vh;
+    border-right: 1px solid #ddd;
+    padding: 1vh;
+    align-self: center;
   }
 
   >.start,

@@ -73,11 +73,7 @@ let pages = {
 }
 
 async function getPage(page) {
-
-  let fullPage = `
-    ${await pages[page]()}
-  `
-  return fullPage;
+  return await pages[page]();
 }
 
 async function router() {
