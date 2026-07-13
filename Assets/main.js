@@ -238,7 +238,7 @@ async function start() {
 
 start()
 
-fetch(`${beServer}busHours/505,267,49?next`)
+fetch(`https://${beServer}busHours/505,267,49?next`)
   .then(res => res.json())
   .then(data => {
     document.getElementsByTagName("main")[0].innerHTML = expeditionsHTML(data)
