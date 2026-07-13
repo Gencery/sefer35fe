@@ -5,7 +5,7 @@ if (feServer == "sefer35.com") {
   beServer = "api.sefer35.com/"
 }
 else {
-  beServer = "http://localhost:3000/"
+  beServer = "localhost:3000/"
 }
 
 async function importResources() {
@@ -238,7 +238,7 @@ async function start() {
 
 start()
 
-fetch(`https://${beServer}busHours/505,267,49?next`)
+fetch(`http://${beServer}busHours/505,267,49?next`)
   .then(res => res.json())
   .then(data => {
     document.getElementsByTagName("main")[0].innerHTML = expeditionsHTML(data)
