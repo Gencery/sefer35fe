@@ -2,7 +2,7 @@ let feServer = location.host;
 let beServer = "";
 
 if (feServer == "sefer35.com") {
-  beServer = "api.sefer35.com/"
+  beServer = "https://api.sefer35.com/"
 }
 else {
   beServer = "localhost:3000/"
@@ -238,7 +238,7 @@ async function start() {
 
 start()
 
-fetch(`http://${beServer}busHours/505,267,49?next`)
+fetch(`${beServer}busHours/505,267,49?next`)
   .then(res => res.json())
   .then(data => {
     document.getElementsByTagName("main")[0].innerHTML = expeditionsHTML(data)
