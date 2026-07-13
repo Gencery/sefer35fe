@@ -5,95 +5,7 @@ if (feServer == "sefer35.com") {
   beServer = "https://api.sefer35.com/"
 }
 else {
-  beServer = "localhost:3000/"
-}
-
-async function importResources() {
-  //Fetching images
-  let imagesMap = [
-    {
-      name: "morpheusVolga",
-      src: "./Assets/img/morpheusVolga.png"
-    },
-    {
-      name: "home",
-      src: "./Assets/img/home.png"
-    },
-    {
-      name: "volga1",
-      src: "./Assets/img/volga1.jpg"
-    },
-    {
-      name: "volga2",
-      src: "./Assets/img/volga2.jpg"
-    },
-    {
-      name: "volga3",
-      src: "./Assets/img/volga3.jpg"
-    },
-    {
-      name: "volga4",
-      src: "./Assets/img/volga4.jpg"
-    },
-    {
-      name: "volga5",
-      src: "./Assets/img/volga5.jpg"
-    },
-    {
-      name: "volga6",
-      src: "./Assets/img/volga6.jpg"
-    },
-    {
-      name: "volga7",
-      src: "./Assets/img/volga7.jpg"
-    }
-  ]
-
-  let responses = await Promise.all(imagesMap.map(async (image) => {
-
-    try {
-
-      return {
-        res: await fetch(`${image.src}`),
-        name: image.name
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }));
-
-  let responseCount = 0;
-
-  let blobs = await Promise.all(responses.map(async (respObj, i) => {
-    let blob = await respObj.res.blob();
-
-    let percentageNum = (++responseCount / responses.length) * 100;
-    let filled = document.getElementById("filled");
-    let percentage = document.getElementById("percentage");
-    //
-    filled.style.width = percentageNum + "%";
-    percentage.innerText = percentageNum.toFixed(1) + "%";
-    //
-    return {
-      blob: blob,
-      name: respObj.name
-    }
-  }));
-
-  let urlObjs = blobs.map(blobObj => {
-    return {
-      url: URL.createObjectURL(blobObj.blob),
-      name: blobObj.name
-    }
-  });
-
-  let imgsObj = {};
-  urlObjs.forEach(urlObj => imgsObj[urlObj.name] = { url: urlObj.url })
-
-  //fetching json data
-  let data = await fetch("./Assets/data.json").then(res => res.json());
-
-  return { img: imgsObj, data: data };
+  beServer = "http://localhost:3000/"
 }
 
 function expeditionsHTML(expeditions) {
@@ -129,14 +41,16 @@ function expeditionsHTML(expeditions) {
 
   return result.reduce((acc, line) => acc +/*html*/`
     <div class="card expedition">
-      <p class="lineNo">${line.lineNo}<p>
-      <div class="start">
-        <p class="name">${line.start.name}</p>
-        <div class="hours">
-          <p>${line.start.hours[0]}</p>
-          <p>${line.start.hours[1]}</p>
+      <p class="lineNo">${line.lineNo.padStart(3, "0")}</p>
+      ${line.start ? /*html*/`
+        <div class="start">
+          <p class="name">${line.start.name}</p>
+          <div class="hours">
+            <p>${line.start.hours[0]}</p>
+            <p>${line.start.hours[1]}</p>
+          </div>
         </div>
-      </div>
+      ` : ""}
       ${line.end ? /*html*/`
         <div class="end">
           <p class="name">${line.end.name}</p>
@@ -144,47 +58,29 @@ function expeditionsHTML(expeditions) {
             <p>${line.end.hours[0]}</p>
             <p>${line.end.hours[1]}</p>
           </div>
-      </div>
+        </div>
       ` : ""}
       
     </div>`, "")
 }
 
-function getPage(page) {
-  let header = () => /*html*/`
-    <header>
-      Volga Can Kaya
-      <br>
-      <p>Actor & Software Producer</p>
-    </header>
-  `
-  let footer = () => /*html*/`
-    <footer>
-      <a href="./?page=home" class="navHome">
-        <img src=${images.home.url} alt="">
-      </a>
-      <span class="copyright">© 2026 Volga Can Kaya. All rights reserved</span>
-    </footer>
-  `
-
-  let pages = {
-    home: {
-
-      content: /*html*/`
-
-    `
-    },
+let pages = {
+  home: async () => {
+    let res = await fetch(`${beServer}busHours/505,267,49?next`);
+    let data = await res.json();
+    return expeditionsHTML(data);
   }
+}
+
+async function getPage(page) {
 
   let fullPage = `
-    ${header()}
-    ${pages[page].content}
-    ${footer()}
+    ${await pages[page]()}
   `
   return fullPage;
 }
 
-function router() {
+async function router() {
   let locationParams = location.search.slice(1).split("&").map(item => item.split("="));
   //
   let locationParamsObj = {};
@@ -195,27 +91,16 @@ function router() {
 
   let currentPage = locationParamsObj.page;
 
-  if (currentPage == undefined) {
+  if (!(currentPage in pages)) {
     currentPage = "home"
   }
 
-  //
-  document.body.classList.add("disappear");
 
-  setTimeout(() => {
-    document.body.innerHTML = getPage(currentPage);
-    document.body.classList.remove("disappear");
-  }, 350)
+  document.getElementsByTagName("main")[0].innerHTML = await getPage(currentPage);
 }
 
-let images = null;
-let data = null;
 
 async function start() {
-
-  // let resources = await importResources();
-  // images = resources.img;
-  // data = resources.data;
 
 
   document.body.addEventListener("click", e => {
@@ -232,14 +117,9 @@ async function start() {
   window.addEventListener("popstate", () => {
     router();
   })
-  //document.addEventListener("DOMContentLoaded", router)
+  document.addEventListener("DOMContentLoaded", router)
   //router();
 }
 
 start()
 
-fetch(`${beServer}busHours/505,267,49?next`)
-  .then(res => res.json())
-  .then(data => {
-    document.getElementsByTagName("main")[0].innerHTML = expeditionsHTML(data)
-  });

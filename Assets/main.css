@@ -55,7 +55,7 @@ body {
   border-radius: 2vh;
   padding: 1vh;
   border: 1px solid transparent;
-  background-color: #eee;
+  background-color: #dfdfdf;
   display: flex;
   flex-direction: column;
 
@@ -71,7 +71,7 @@ body {
 
   main {
     flex-grow: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   nav {
@@ -96,18 +96,22 @@ body {
     margin: 1vw;
   }
 
-  >.lineNo {}
+  >.lineNo {
+    font-weight: bold;
+  }
 
   >.start,
   >.end {
     flex-grow: 1;
+    text-align: center;
 
     >.name {
-      font-size: 4.5vw;
+      font-size: 2vh;
+      font-weight: bold;
     }
 
     >.hours {
-      font-size: 4vw;
+      font-size: 2.5vh;
     }
   }
 }
