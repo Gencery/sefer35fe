@@ -50,7 +50,6 @@ body {
   margin: 0 auto;
   height: 100svh;
   max-width: 500px;
-  border-radius: 2vh;
   padding: 1vh;
   border: 1px solid transparent;
   background-color: #eee;
@@ -83,8 +82,8 @@ body {
       border: none;
       background: none;
       box-shadow: 0 0 4px 2px #222;
-      top: 90%;
-      left: 80%;
+      bottom: 1vh;
+      right: 1vh;
       text-align: center;
       font-weight: bold;
       appearance: none;
