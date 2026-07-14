@@ -8,6 +8,27 @@ else {
   beServer = "http://localhost:3000/"
 }
 
+let ls = {
+  favLines: {
+    add: (lineNo) => {
+      let lines = new Set(ls.favLines.get());
+      lines.add(lineNo);
+      localStorage.setItem("favLines", [...lines]);
+
+    },
+    remove: (lineNo) => {
+      let lines = new Set(ls.favLines.get());
+      lines.delete(lineNo);
+      localStorage.setItem("favLines", [...lines]);
+    },
+    get: () => {
+
+      return localStorage.getItem("favLines") ? localStorage.getItem("favLines").split(",") : [];
+    }
+  }
+}
+
+
 function expeditionsHTML(expeditions) {
   let result = [];
 
@@ -41,7 +62,7 @@ function expeditionsHTML(expeditions) {
 
   return result.reduce((acc, line) => acc +/*html*/`
     <div class="card expedition">
-      <p class="lineNo">${line.lineNo.padStart(3, "0")}</p>
+      <p class="lineNo">${line.lineNo}</p>
       ${line.start ? /*html*/`
         <div class="start">
           <p class="name">${line.start.name}</p>
@@ -64,11 +85,21 @@ function expeditionsHTML(expeditions) {
     </div>`, "")
 }
 
+
 let pages = {
   home: async () => {
-    let res = await fetch(`${beServer}busHours/505,267,49?next`);
-    let data = await res.json();
-    return expeditionsHTML(data);
+
+    let favLines = ls.favLines.get();
+    if (favLines.length) {
+      let res = await fetch(`${beServer}busHours/${favLines.toString()}?next`);
+      let data = await res.json();
+      return expeditionsHTML(data);
+    }
+    else {
+      return ""
+    }
+
+
   }
 }
 
