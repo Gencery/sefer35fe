@@ -90,16 +90,18 @@ let pages = {
   home: async () => {
 
     let favLines = ls.favLines.get();
+    let expeditionsHTML = "";
+
     if (favLines.length) {
       let res = await fetch(`${beServer}busHours/${favLines.toString()}?next`);
       let data = await res.json();
-      return expeditionsHTML(data);
-    }
-    else {
-      return ""
+      let expeditionsHTML = expeditionsHTML(data);
     }
 
-
+    return /*html*/`
+      ${expeditionsHTML}
+      <button class="newLine">Hat Ekle</button>
+    `
   }
 }
 
