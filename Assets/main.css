@@ -74,23 +74,31 @@ body {
     flex-grow: 1;
     overflow-y: auto;
     position: relative;
+
+    >.newLineButton {
+      border-radius: 50%;
+      width: 7vh;
+      height: 7vh;
+      position: absolute;
+      border: none;
+      background: none;
+      box-shadow: 0 0 4px 2px #222;
+      top: 90%;
+      left: 85%;
+      text-align: center;
+      font-weight: bold;
+      appearance: none;
+
+    }
+
+    >.infoNewLine {
+      text-align: center;
+      font-size: 0.85rem;
+      margin-top: 33%;
+    }
   }
 
-  .newLineButton {
-    border-radius: 50%;
-    width: 7vh;
-    height: 7vh;
-    position: absolute;
-    border: none;
-    background: none;
-    box-shadow: 0 0 4px 2px #222;
-    top: 90%;
-    left: 85%;
-    text-align: center;
-    font-weight: bold;
-    appearance: none;
 
-  }
 
   nav {
     >a {
