@@ -28,8 +28,27 @@ let ls = {
   }
 }
 
+async function fetchLinesList(elem) {
+  let res = await fetch(`${beServer}lines`);
+  let data = (await res.json()).data;
 
-function expeditionsHTML(expeditions) {
+  let htmlOptions = Object.keys(data).reduce((acc, cur) => acc + /*html*/`
+    <option value=${cur}>${cur} - ${data[cur].name}</option>
+  `)
+
+  elem.innerHTML = /*html*/`
+    <option value="" hidden>Ekle</option>
+    ${htmlOptions}
+  `
+}
+
+function addNewLine(elem) {
+  let value = elem.value;
+  ls.favLines.add(value);
+  location = location;
+}
+
+function getExpeditionsHTML(expeditions) {
   let result = [];
 
   Object.keys(expeditions).map(line => {
@@ -92,21 +111,25 @@ let pages = {
     let favLines = ls.favLines.get();
     let expeditionsHTML = "";
 
-    if (favLines.length) {
+
+    if (favLines.length > 0) {
       let res = await fetch(`${beServer}busHours/${favLines.toString()}?next`);
       let data = await res.json();
-      let expeditionsHTML = expeditionsHTML(data);
+      expeditionsHTML = getExpeditionsHTML(data);
     }
+
 
     return /*html*/`
       ${expeditionsHTML}
-      <button class="newLine">Hat Ekle</button>
+      <select class="newLineButton" onclick="fetchLinesList(this)" oninput="addNewLine(this)">
+        <option value="" hidden>Ekle</option>
+      </select>
     `
   }
 }
 
 async function getPage(page) {
-  return await pages[page]();
+  return pages[page]();
 }
 
 async function router() {

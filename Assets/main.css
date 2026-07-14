@@ -76,7 +76,7 @@ body {
     position: relative;
   }
 
-  .newLine {
+  .newLineButton {
     border-radius: 50%;
     width: 7vh;
     height: 7vh;
@@ -84,8 +84,11 @@ body {
     border: none;
     background: none;
     box-shadow: 0 0 4px 2px #222;
-    bottom: 1vh;
-    right: 1vh;
+    top: 90%;
+    left: 85%;
+    text-align: center;
+    font-weight: bold;
+    appearance: none;
 
   }
 
