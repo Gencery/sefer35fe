@@ -109,7 +109,11 @@ let pages = {
   home: async () => {
 
     let favLines = ls.favLines.get();
-    let expeditionsHTML = "";
+    let expeditionsHTML = /*html*/`
+      <p>
+        Hareket saatlerini takip etmek istediğiniz otobüs hatlarını sağ alttaki "Ekle" butonuna tıklayarak favorilerinize ekleyebilirsiniz.
+      </p>
+    `;
 
 
     if (favLines.length > 0) {
