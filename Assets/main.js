@@ -45,7 +45,8 @@ async function fetchLinesList(elem) {
 function addNewLine(elem) {
   let value = elem.value;
   ls.favLines.add(value);
-  location = location;
+
+  location.reload()
 }
 
 function getExpeditionsHTML(expeditions) {
