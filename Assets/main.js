@@ -34,7 +34,7 @@ let ls = {
   }
 }
 
-function ComboBox(optionsArr) {
+function ComboBox(optionsArr, onselectfn) {
 
   //
   let comboBox = document.createElement("div");
@@ -53,6 +53,7 @@ function ComboBox(optionsArr) {
   //
   let optionsContainer = document.createElement("div");
   optionsContainer.classList.add("optionsContainer");
+  optionsContainer.addEventListener("click", (e) => onselectfn(e))
   //
   let comboBoxSearchArea = document.createElement("input");
   comboBoxSearchArea.classList.add("searchArea");
@@ -163,9 +164,15 @@ let pages = {
       return { text: `${lineNo} - ${linesList[lineNo].name}`, value: lineNo }
     }))
 
+    function onselectfn(e) {
+      let selectedLineNo = e.target.getAttribute("data-value");
+      ls.favLines.add(selectedLineNo);
+      e.target.closest(".comboBox").remove();
+    }
+
     return [
       strToNode(expeditionsHTML),
-      ComboBox(linesListArr)
+      ComboBox(linesListArr, onselectfn)
     ]
   }
 }
