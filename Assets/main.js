@@ -8,6 +8,12 @@ else {
   beServer = "http://localhost:3000/"
 }
 
+function strToNode(str) {
+  let div = document.createElement("div");
+  div.innerHTML = str;
+  return [...div.children];
+}
+
 let ls = {
   favLines: {
     add: (lineNo) => {
@@ -28,18 +34,47 @@ let ls = {
   }
 }
 
-async function fetchLinesList(elem) {
+function ComboBox(optionsArr) {
+
+  //
+  let comboBox = document.createElement("div");
+  comboBox.classList.add("comboBox");
+  //
+
+  let comboBoxInnerContainer = document.createElement("div");
+  comboBoxInnerContainer.classList.add("innerContainer");
+  comboBox.appendChild(comboBoxInnerContainer);
+  //
+
+  let comboBoxExitArea = document.createElement("div");
+  comboBoxExitArea.classList.add("comboBoxExit")
+  comboBoxExitArea.addEventListener("click", (e) => e.target.closest(".comboBox").remove())
+
+  //
+  let optionsContainer = document.createElement("div");
+  optionsContainer.classList.add("optionsContainer");
+  //
+  let comboBoxSearchArea = document.createElement("input");
+  comboBoxSearchArea.classList.add("searchArea");
+
+  //options
+  optionsArr.forEach(item => {
+    let option = document.createElement("span");
+    option.innerHTML = item.text;
+    option.setAttribute("data-value", item.value)
+    optionsContainer.appendChild(option);
+  })
+
+  comboBox.appendChild(comboBoxExitArea);
+  comboBoxInnerContainer.appendChild(optionsContainer);
+  comboBoxInnerContainer.appendChild(comboBoxSearchArea);
+
+  return [comboBox];
+}
+
+async function fetchLinesList() {
   let res = await fetch(`${beServer}lines`);
-  let data = (await res.json()).data;
-
-  let htmlOptions = Object.keys(data).reduce((acc, cur) => acc + /*html*/`
-    <option value=${cur}>${cur} - ${data[cur].name}</option>
-  `)
-
-  elem.innerHTML = /*html*/`
-    <option value="" hidden>Ekle</option>
-    ${htmlOptions}
-  `
+  return (await res.json()).data;
 }
 
 function addNewLine(elem) {
@@ -123,13 +158,15 @@ let pages = {
       expeditionsHTML = getExpeditionsHTML(data);
     }
 
+    let linesList = await fetchLinesList();
+    let linesListArr = (Object.keys(linesList).map(lineNo => {
+      return { text: `${lineNo} - ${linesList[lineNo].name}`, value: lineNo }
+    }))
 
-    return /*html*/`
-      ${expeditionsHTML}
-      <select class="newLineButton" onclick="fetchLinesList(this)" oninput="addNewLine(this)">
-        <option value="" hidden>Ekle</option>
-      </select>
-    `
+    return [
+      strToNode(expeditionsHTML),
+      ComboBox(linesListArr)
+    ]
   }
 }
 
@@ -152,8 +189,11 @@ async function router() {
     currentPage = "home"
   }
 
+  let page = await getPage(currentPage);
+  let flattenedPage = [];
+  page.forEach(item => flattenedPage.push(...item));
 
-  document.getElementsByTagName("main")[0].innerHTML = await getPage(currentPage);
+  flattenedPage.forEach(elem => document.getElementsByTagName("main")[0].appendChild(elem));
 }
 
 
