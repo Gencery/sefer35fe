@@ -34,11 +34,11 @@ let ls = {
   }
 }
 
-function ComboBox(optionsArr, onselectfn) {
+function ComboBox(optionsArr, onselectfn, props) {
 
   //
   let comboBox = document.createElement("div");
-  comboBox.classList.add("comboBox");
+  Object.keys(props).forEach(prop => comboBox.setAttribute(prop, props[prop]))
   //
 
   let comboBoxInnerContainer = document.createElement("div");
@@ -76,13 +76,6 @@ function ComboBox(optionsArr, onselectfn) {
 async function fetchLinesList() {
   let res = await fetch(`${beServer}lines`);
   return (await res.json()).data;
-}
-
-function addNewLine(elem) {
-  let value = elem.value;
-  ls.favLines.add(value);
-
-  location.reload()
 }
 
 function getExpeditionsHTML(expeditions) {
@@ -141,6 +134,11 @@ function getExpeditionsHTML(expeditions) {
     </div>`, "")
 }
 
+function newLineButton() {
+  return /*html*/`
+    <button class="newLineButton">Ekle</button>
+  `
+}
 
 let pages = {
   home: async () => {
@@ -167,12 +165,14 @@ let pages = {
     function onselectfn(e) {
       let selectedLineNo = e.target.getAttribute("data-value");
       ls.favLines.add(selectedLineNo);
+      location.reload()
       e.target.closest(".comboBox").remove();
     }
 
     return [
       strToNode(expeditionsHTML),
-      ComboBox(linesListArr, onselectfn)
+      ComboBox(linesListArr, onselectfn, { id: "linesCombo", class: "comboBox hidden" }),
+      strToNode(newLineButton)
     ]
   }
 }
