@@ -173,10 +173,10 @@ body {
     width: 90%;
     height: 84%;
     margin: auto;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: end;
+    z-index: 1;
 
     .searchArea {
       min-height: 5vh;

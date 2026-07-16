@@ -34,11 +34,15 @@ let ls = {
   }
 }
 
+function addPropsToElem(elem, props) {
+  Object.keys(props).forEach(prop => elem.setAttribute(prop, props[prop]))
+}
+
 function ComboBox(optionsArr, onselectfn, props) {
 
   //
   let comboBox = document.createElement("div");
-  Object.keys(props).forEach(prop => comboBox.setAttribute(prop, props[prop]))
+  addPropsToElem(comboBox, props);
   //
 
   let comboBoxInnerContainer = document.createElement("div");
@@ -48,7 +52,7 @@ function ComboBox(optionsArr, onselectfn, props) {
 
   let comboBoxExitArea = document.createElement("div");
   comboBoxExitArea.classList.add("comboBoxExit")
-  comboBoxExitArea.addEventListener("click", (e) => e.target.closest(".comboBox").remove())
+  comboBoxExitArea.addEventListener("click", (e) => e.target.closest(".comboBox").classList.toggle("hidden"))
 
   //
   let optionsContainer = document.createElement("div");
@@ -134,10 +138,14 @@ function getExpeditionsHTML(expeditions) {
     </div>`, "")
 }
 
-function newLineButton() {
-  return /*html*/`
-    <button class="newLineButton">Ekle</button>
-  `
+function newLineButton(props) {
+  let newLineButton = document.createElement("button");
+  addPropsToElem(newLineButton, props);
+  newLineButton.innerText = "Ekle";
+  newLineButton.addEventListener("click", () => {
+    document.getElementById("linesCombo").classList.toggle("hidden");
+  })
+  return [newLineButton];
 }
 
 let pages = {
@@ -172,7 +180,7 @@ let pages = {
     return [
       strToNode(expeditionsHTML),
       ComboBox(linesListArr, onselectfn, { id: "linesCombo", class: "comboBox hidden" }),
-      strToNode(newLineButton)
+      newLineButton({ class: "newLineButton" })
     ]
   }
 }
