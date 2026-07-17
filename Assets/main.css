@@ -78,15 +78,17 @@ body {
       border-radius: 50%;
       width: 7vh;
       height: 7vh;
-      position: absolute;
+      position: fixed;
       border: none;
       background: none;
       box-shadow: 0 0 4px 2px #222;
-      bottom: 1vh;
-      right: 1vh;
+      bottom: 5vh;
+      right: 3vh;
       text-align: center;
       font-weight: bold;
       appearance: none;
+      z-index: 1;
+      background-color: #eee;
 
     }
 
@@ -158,6 +160,7 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  z-index: 2;
 
   .comboBoxExit {
     width: 100%;
@@ -176,7 +179,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: end;
-    z-index: 1;
+    z-index: 2;
 
     .searchArea {
       min-height: 5vh;

@@ -120,8 +120,8 @@ function getExpeditionsHTML(expeditions) {
         <div class="start">
           <p class="name">${line.start.name}</p>
           <div class="hours">
-            <p>${line.start.hours[0]}</p>
-            <p>${line.start.hours[1]}</p>
+            <p>${line.start.hours[0] || ""}</p>
+            <p>${line.start.hours[1] || ""}</p>
           </div>
         </div>
       ` : ""}
@@ -129,8 +129,8 @@ function getExpeditionsHTML(expeditions) {
         <div class="end">
           <p class="name">${line.end.name}</p>
           <div class="hours">
-            <p>${line.end.hours[0]}</p>
-            <p>${line.end.hours[1]}</p>
+            <p>${line.end.hours[0] || ""}</p>
+            <p>${line.end.hours[1] || ""}</p>
           </div>
         </div>
       ` : ""}
@@ -179,7 +179,7 @@ let pages = {
 
     return [
       strToNode(expeditionsHTML),
-      ComboBox(linesListArr, onselectfn, { id: "linesCombo", class: "comboBox hidden" }),
+      ComboBox(linesListArr, onselectfn, { id: "linesCombo", class: "comboBox hidden", placeholder: "Hat No/Adı giriniz..." }),
       newLineButton({ class: "newLineButton" })
     ]
   }
