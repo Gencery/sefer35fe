@@ -85,9 +85,11 @@ async function fetchLinesList() {
 function getExpeditionsHTML(expeditions) {
   let result = [];
 
+
   Object.keys(expeditions).map(line => {
     let lineObj = expeditions[line];
-    let dayObj = lineObj[Object.keys(lineObj)[0]];
+    let dayObj = lineObj.days;
+    console.log(dayObj);
     let directionsObj = dayObj[Object.keys(dayObj)[0]];
     let directionsResult = [];
 
