@@ -91,24 +91,41 @@ function getExpeditionsHTML(expeditions) {
     let directionsObj = dayObj[Object.keys(dayObj)[0]];
     let directionsResult = [];
 
-    let [startName, endName] = Object.keys(directionsObj.directions);
+    if ("directions" in directionsObj) {
+      let [startName, endName] = Object.keys(directionsObj.directions);
 
-    directionsResult = {
-      lineNo: line,
-      ...(startName && {
-        start: {
-          name: startName,
-          hours: directionsObj.directions[startName]
-        },
-      }),
-      ...(endName && {
-        end: {
-          name: endName,
-          hours: directionsObj.directions[endName]
+      directionsResult = {
+        lineNo: line,
+        ...(startName && {
+          start: {
+            name: startName,
+            hours: directionsObj.directions[startName]
+          },
+        }),
+        ...(endName && {
+          end: {
+            name: endName,
+            hours: directionsObj.directions[endName]
 
-        }
-      })
+          }
+        })
+      }
     }
+    else {
+      directionsResult = {
+        lineNo: line,
+        start: {
+          name: "Bu hat bugün hizmet vermemektedir.",
+          hours: []
+        },
+        end: {
+          name: "",
+          hours: []
+        },
+      }
+    }
+
+
     result.push(directionsResult)
   })
 
