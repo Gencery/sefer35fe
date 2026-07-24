@@ -127,8 +127,9 @@ body {
     align-self: center;
     min-width: 20%;
     width: 3ch;
-    padding-left: 1vh;
+    padding-right: 1vh;
     min-height: 100%;
+    text-align: center;
   }
 
   >.expeditions {
@@ -148,7 +149,6 @@ body {
         font-size: 2vh;
         font-weight: bold;
         flex-grow: 1;
-        margin: 1vh 0vh 2vh 0;
       }
 
       >.hours {
@@ -227,5 +227,5 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }

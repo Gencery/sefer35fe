@@ -61,6 +61,13 @@ function ComboBox(optionsArr, onselectfn, props) {
   //
   let comboBoxSearchArea = document.createElement("input");
   comboBoxSearchArea.classList.add("searchArea");
+  comboBoxSearchArea.addEventListener("input", (e) => {
+    let input = e.target;
+    let options = [...optionsContainer.children];
+    options.forEach(option => option.classList.add("hidden"));
+    let validOptions = options.filter(option => option.innerText.includes(input.value.toUpperCase()));
+    validOptions.forEach(option => option.classList.remove("hidden"));
+  })
 
   //options
   optionsArr.forEach(item => {
