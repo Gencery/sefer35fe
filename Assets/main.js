@@ -85,75 +85,49 @@ async function fetchLinesList() {
 function getExpeditionsHTML(expeditions) {
   let result = [];
 
+  let favLines = ls.favLines.get();
 
-  Object.keys(expeditions).map(line => {
-    let lineObj = expeditions[line];
-    let dayObj = lineObj.days;
-    console.log(dayObj);
-    let directionsObj = dayObj[Object.keys(dayObj)[0]];
-    let directionsResult = [];
 
-    if ("directions" in directionsObj) {
-      let [startName, endName] = Object.keys(directionsObj.directions);
+  result = favLines.map(lineNo => {
+    // let lineObj = expeditions[line];
+    // let dayObj = lineObj.days;
+    // let directionsObj = dayObj[Object.keys(dayObj)[0]];
+    // let directionsResult = [];
 
-      directionsResult = {
-        lineNo: line,
-        ...(startName && {
-          start: {
-            name: startName,
-            hours: directionsObj.directions[startName]
-          },
-        }),
-        ...(endName && {
-          end: {
-            name: endName,
-            hours: directionsObj.directions[endName]
+    return {
+      lineNo: lineNo,
+      start: {
+        name: expeditions[lineNo].directions.start.name,
+        hours: expeditions[lineNo].directions.start.expeditions
+      },
+      end: {
+        name: expeditions[lineNo].directions.end.name,
+        hours: expeditions[lineNo].directions.end.expeditions
 
-          }
-        })
       }
     }
-    else {
-      directionsResult = {
-        lineNo: line,
-        start: {
-          name: "Bu hat bugün hizmet vermemektedir.",
-          hours: []
-        },
-        end: {
-          name: "",
-          hours: []
-        },
-      }
-    }
-
-
-    result.push(directionsResult)
   })
 
 
   return result.reduce((acc, line) => acc +/*html*/`
     <div class="card expedition">
       <p class="lineNo">${line.lineNo}</p>
-      ${line.start ? /*html*/`
+      <div class="expeditions">
         <div class="start">
           <p class="name">${line.start.name}</p>
           <div class="hours">
-            <p>${line.start.hours[0] || ""}</p>
-            <p>${line.start.hours[1] || ""}</p>
+            <p>${line.start.hours[0] || "-"}</p>
+            <p>${line.start.hours[1] || "-"}</p>
           </div>
         </div>
-      ` : ""}
-      ${line.end ? /*html*/`
         <div class="end">
           <p class="name">${line.end.name}</p>
           <div class="hours">
-            <p>${line.end.hours[0] || ""}</p>
-            <p>${line.end.hours[1] || ""}</p>
+            <p>${line.end.hours[0] || "-"}</p>
+            <p>${line.end.hours[1] || "-"}</p>
           </div>
         </div>
-      ` : ""}
-      
+      </div>
     </div>`, "")
 }
 
