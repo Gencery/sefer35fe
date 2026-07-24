@@ -61,11 +61,12 @@ function ComboBox(optionsArr, onselectfn, props) {
   //
   let comboBoxSearchArea = document.createElement("input");
   comboBoxSearchArea.classList.add("searchArea");
+  comboBoxSearchArea.setAttribute("placeholder", props.placeholder)
   comboBoxSearchArea.addEventListener("input", (e) => {
     let input = e.target;
     let options = [...optionsContainer.children];
     options.forEach(option => option.classList.add("hidden"));
-    let validOptions = options.filter(option => option.innerText.includes(input.value.toUpperCase()));
+    let validOptions = options.filter(option => option.innerText.includes(input.value.toLocaleUpperCase('tr-TR')));
     validOptions.forEach(option => option.classList.remove("hidden"));
   })
 
@@ -179,7 +180,7 @@ let pages = {
 
     return [
       strToNode(expeditionsHTML),
-      ComboBox(linesListArr, onselectfn, { id: "linesCombo", class: "comboBox hidden", placeholder: "Hat No/Adı giriniz..." }),
+      ComboBox(linesListArr, onselectfn, { id: "linesCombo", class: "comboBox hidden", placeholder: "Hat No, Hat Adı giriniz..." }),
       newLineButton({ class: "newLineButton" })
     ]
   }
