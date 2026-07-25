@@ -1,7 +1,6 @@
-let feServer = location.host;
 let beServer = "";
 
-if (feServer == "sefer35.com") {
+if (location.host == "sefer35.com") {
   beServer = "https://api.sefer35.com/"
 }
 else {
