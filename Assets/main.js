@@ -5,7 +5,7 @@ if (feServer == "sefer35.com") {
   beServer = "https://api.sefer35.com/"
 }
 else {
-  beServer = "http://localhost:3000/"
+  beServer = `http://${location.hostname}:3000/`
 }
 
 function strToNode(str) {
