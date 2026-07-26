@@ -119,6 +119,7 @@ body {
 .expedition {
   padding: 1vh;
   display: flex;
+  min-height: 15vh;
 
   >.lineNo {
     font-weight: bold;
@@ -143,7 +144,6 @@ body {
       max-width: 50%;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
 
       >.name {
         font-size: 2vh;
@@ -215,7 +215,8 @@ body {
         width: 100%;
         border-bottom: 1px solid #666;
         padding: 1vh;
-        font-size: 0.85rem;
+        font-size: 1rem;
+        margin: 1vh 0;
       }
     }
   }
