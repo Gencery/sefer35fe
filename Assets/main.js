@@ -13,24 +13,27 @@ function strToNode(str) {
   return [...div.children];
 }
 
+
+
 let ls = {
+  //local storage helper methods
+  addObj: (key, val) => {
+    localStorage.setItem(JSON.stringify(obj))
+  },
+  getObj: (key) => JSON.parse(localStorage.getItem(key)),
+  //user favlines
   favLines: {
+    list: {},
     add: (lineNo) => {
-      let lines = new Set(ls.favLines.get());
-      lines.add(lineNo);
-      localStorage.setItem("favLines", [...lines]);
-
+      if (!(lineNo in ls.favLines.list)) {
+        ls.favLines.list[lineNo] = { isPrefersStart: true }
+      }
     },
+    get: () => ls.favLines.list,
     remove: (lineNo) => {
-      let lines = new Set(ls.favLines.get());
-      lines.delete(lineNo);
-      localStorage.setItem("favLines", [...lines]);
-    },
-    get: () => {
-
-      return localStorage.getItem("favLines") ? localStorage.getItem("favLines").split(",") : [];
+      ls.favLines.list.remove(lineNo)
     }
-  }
+  },
 }
 
 function addPropsToElem(elem, props) {
@@ -56,7 +59,11 @@ function ComboBox(optionsArr, onselectfn, props) {
   //
   let optionsContainer = document.createElement("div");
   optionsContainer.classList.add("optionsContainer");
-  optionsContainer.addEventListener("click", (e) => onselectfn(e))
+  optionsContainer.addEventListener("click", (e) => {
+    if (!!e.target.getAttribute("data-value")) {
+      return onselectfn(e)
+    }
+  })
   //
   let comboBoxSearchArea = document.createElement("input");
   comboBoxSearchArea.classList.add("searchArea");

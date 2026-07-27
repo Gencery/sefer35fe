@@ -119,7 +119,7 @@ body {
 .expedition {
   padding: 1vh;
   display: flex;
-  min-height: 15vh;
+  min-height: 12vh;
 
   >.lineNo {
     font-weight: bold;
