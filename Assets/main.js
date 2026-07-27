@@ -109,6 +109,7 @@ async function fetchLinesList() {
 function getExpeditionsHTML(expeditions) {
   let result = [];
 
+  let lsFavLines = ls.favLines.get();
 
   result = Object.keys(expeditions).map(lineNo => {
     // let lineObj = expeditions[line];
@@ -133,23 +134,34 @@ function getExpeditionsHTML(expeditions) {
 
   return result.reduce((acc, line) => acc +/*html*/`
     <div class="card expedition">
-      <p class="lineNo">${line.lineNo}</p>
-      <div class="expeditions">
-        <div class="start">
-          <p class="name">${line.start.name}</p>
-          <div class="hours">
-            <p>${line.start.hours[0] || "-"}</p>
-            <p>${line.start.hours[1] || "-"}</p>
+      <div class="lineInfo">
+        <p class="lineNo">${line.lineNo}</p>
+        <p class="ways">${line.start.name} - ${line.end.name}</p>
+      </div>
+      <hr/>
+      <div class="innerExpedition">
+        <div class="ways">
+          <div class="start ${lsFavLines[line.lineNo].isPrefersStart ? "" : "hidden"}">
+            <p class="name">${line.start.name} Yönü</p>
+            <div class="hours">
+              <p>Sıradaki ${line.start.hours[0] || "-"}</p>
+              <p>Sonraki ${line.start.hours[1] || "-"}</p>
+            </div>
+          </div>
+          <div class="end ${lsFavLines[line.lineNo].isPrefersStart ? "hidden" : ""}">
+            <p class="name">${line.end.name} Yönü</p>
+            <div class="hours">
+              <p>Sıradaki ${line.end.hours[0] || "-"}</p>
+              <p>Sonraki ${line.end.hours[1] || "-"}</p>
+            </div>
           </div>
         </div>
-        <div class="end">
-          <p class="name">${line.end.name}</p>
-          <div class="hours">
-            <p>${line.end.hours[0] || "-"}</p>
-            <p>${line.end.hours[1] || "-"}</p>
-          </div>
+        <div class="controls">
+          <button>Çevir</button>
+          <button>Sil</button>
         </div>
       </div>
+      
     </div>`, "")
 }
 
@@ -191,16 +203,18 @@ let pages = {
       return { text: `${lineNo} - ${linesList[lineNo].name}`, value: lineNo }
     }))
 
-    function onselectfn(e) {
+    function onLineSelect(e) {
       let selectedLineNo = e.target.getAttribute("data-value");
       ls.favLines.add(selectedLineNo);
       location.reload()
       //e.target.closest(".comboBox").remove();
     }
 
+
+
     return [
       strToNode(expeditionsHTML),
-      ComboBox(linesListArr, onselectfn, { id: "linesCombo", class: "comboBox hidden", placeholder: "Hat No, Hat Adı giriniz..." }),
+      ComboBox(linesListArr, onLineSelect, { id: "linesCombo", class: "comboBox hidden", placeholder: "Hat No, Hat Adı giriniz..." }),
       newLineButton({ class: "newLineButton" })
     ]
   }

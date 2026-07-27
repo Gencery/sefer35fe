@@ -120,43 +120,62 @@ body {
   padding: 1vh;
   display: flex;
   min-height: 12vh;
+  flex-direction: column;
 
-  >.lineNo {
-    font-weight: bold;
-    font-size: 3vh;
-    border-right: 1px solid #bbb;
-    align-self: center;
-    min-width: 20%;
-    width: 3ch;
-    padding-right: 1vh;
-    min-height: 100%;
-    text-align: center;
-  }
-
-  >.expeditions {
+  >.lineInfo {
     display: flex;
-    flex-grow: 1;
 
-    >.start,
-    >.end {
-      flex-grow: 1;
-      text-align: center;
-      max-width: 50%;
-      display: flex;
-      flex-direction: column;
+    >* {
+      margin: 1vh;
+    }
 
-      >.name {
-        font-size: 2vh;
-        font-weight: bold;
-        flex-grow: 1;
-      }
+    >.lineNo {
+      font-weight: bold;
+      background-color: #333;
+      color: #ddd;
+      padding: 1vh;
+      border-radius: 1vh;
+    }
 
-      >.hours {
-        font-size: 2.5vh;
-        font-variant-numeric: tabular-nums;
-      }
+    >.ways {
+      font-size: 0.875rem;
+      text-align: left;
+      font-weight: bold;
     }
   }
+
+  >.innerExpedition {
+    display: flex;
+    margin-top: 1vh;
+
+    >.ways {
+      display: flex;
+      flex-grow: 1;
+
+      >.start,
+      >.end {
+        padding: 1vh;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+
+        >.name {
+          font-size: 2vh;
+          font-weight: bold;
+          flex-grow: 1;
+        }
+
+        >.hours {
+          font-size: 2.5vh;
+          font-variant-numeric: tabular-nums;
+        }
+      }
+    }
+
+    >.controls {}
+  }
+
+
 
 
 }
@@ -225,5 +244,5 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
