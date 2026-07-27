@@ -144,21 +144,21 @@ function getExpeditionsHTML(expeditions) {
           <div class="start ${lsFavLines[line.lineNo].isPrefersStart ? "" : "hidden"}">
             <p class="name">${line.start.name} Yönü</p>
             <div class="hours">
-              <p>Sıradaki ${line.start.hours[0] || "-"}</p>
-              <p>Sonraki ${line.start.hours[1] || "-"}</p>
+              <p><span>Sıradaki:</span> <span>${line.start.hours[0] || "-"}</span></p>
+              <p><span>Sonraki:</span> <span>${line.start.hours[1] || "-"}</span></p>
             </div>
           </div>
           <div class="end ${lsFavLines[line.lineNo].isPrefersStart ? "hidden" : ""}">
             <p class="name">${line.end.name} Yönü</p>
             <div class="hours">
-              <p>Sıradaki ${line.end.hours[0] || "-"}</p>
-              <p>Sonraki ${line.end.hours[1] || "-"}</p>
+              <p><span>Sıradaki:</span> <span>${line.end.hours[0] || "-"}</span></p>
+              <p><span>Sonraki:</span> <span>${line.end.hours[1] || "-"}</span></p>
             </div>
           </div>
         </div>
         <div class="controls">
-          <button>Çevir</button>
-          <button>Sil</button>
+          <button>🔁</button>
+          <button>❌</button>
         </div>
       </div>
       

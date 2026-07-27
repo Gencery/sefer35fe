@@ -160,24 +160,40 @@ body {
         flex-direction: column;
 
         >.name {
-          font-size: 2vh;
+          font-size: 0.8rem;
           font-weight: bold;
           flex-grow: 1;
         }
 
         >.hours {
-          font-size: 2.5vh;
+          font-size: 0.95rem;
           font-variant-numeric: tabular-nums;
+          display: flex;
+          flex-direction: column;
         }
       }
     }
 
-    >.controls {}
+    >.controls {
+      display: flex;
+      flex-direction: column;
+
+      >button {
+        height: 5vh;
+        width: 5vh;
+        margin: 1vh;
+        padding: 1vh;
+        border-radius: 1vh;
+        background: none;
+        border: none;
+        box-shadow: 0 0 2px 1px #666;
+      }
+    }
   }
+}
 
-
-
-
+.expedition:last-of-type(1) {
+  margin-bottom: 10vh;
 }
 
 .comboBox {
