@@ -17,24 +17,34 @@ function strToNode(str) {
 
 let ls = {
   //local storage helper methods
-  addObj: (key, val) => {
-    localStorage.setItem(JSON.stringify(obj))
+  setObj: (key, val) => {
+    localStorage.setItem(key, JSON.stringify(val))
   },
   getObj: (key) => JSON.parse(localStorage.getItem(key)),
   //user favlines
   favLines: {
-    list: {},
     add: (lineNo) => {
-      if (!(lineNo in ls.favLines.list)) {
-        ls.favLines.list[lineNo] = { isPrefersStart: true }
+      let favLinesList = ls.favLines.get();
+      if (!(lineNo in favLinesList)) {
+        favLinesList[lineNo] = { isPrefersStart: true }
       }
+      ls.setObj("favLines", favLinesList);
     },
-    get: () => ls.favLines.list,
+    get: () => ls.getObj("favLines"),
     remove: (lineNo) => {
-      ls.favLines.list.remove(lineNo)
+      let favLines = ls.getObj("favLines");
+      if (lineNo in favLines) {
+        delete ls.favLines.list.lineNo;
+        ls.setObj("favLines", favLines);
+      }
     }
   },
 }
+
+if (!ls.getObj("favLines")) {
+  ls.setObj("favLines", {})
+}
+
 
 function addPropsToElem(elem, props) {
   Object.keys(props).forEach(prop => elem.setAttribute(prop, props[prop]))
@@ -99,10 +109,8 @@ async function fetchLinesList() {
 function getExpeditionsHTML(expeditions) {
   let result = [];
 
-  let favLines = ls.favLines.get();
 
-
-  result = favLines.map(lineNo => {
+  result = Object.keys(expeditions).map(lineNo => {
     // let lineObj = expeditions[line];
     // let dayObj = lineObj.days;
     // let directionsObj = dayObj[Object.keys(dayObj)[0]];
@@ -158,16 +166,22 @@ function newLineButton(props) {
 let pages = {
   home: async () => {
 
-    let favLines = ls.favLines.get();
     let expeditionsHTML = /*html*/`
       <p class="infoNewLine">
         Hareket saatlerini takip etmek istediğiniz otobüs hatlarını sağ alttaki "Ekle" butonuna tıklayarak favorilerinize ekleyebilirsiniz.
       </p>
     `;
 
+    let favLines = ls.getObj("favLines");
+    if (!favLines) {
+      ls.favLines.list = {}
+      favLines = ls.getObj("favLines");
+    }
+    let favLinesList = Object.keys(favLines);
 
-    if (favLines.length > 0) {
-      let res = await fetch(`${beServer}busHours/${favLines.toString()}?next`);
+    if (favLinesList.length > 0) {
+
+      let res = await fetch(`${beServer}busHours/${favLinesList.toString()}?next`);
       let data = await res.json();
       expeditionsHTML = getExpeditionsHTML(data);
     }
@@ -181,7 +195,7 @@ let pages = {
       let selectedLineNo = e.target.getAttribute("data-value");
       ls.favLines.add(selectedLineNo);
       location.reload()
-      e.target.closest(".comboBox").remove();
+      //e.target.closest(".comboBox").remove();
     }
 
     return [
