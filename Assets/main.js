@@ -148,8 +148,7 @@ function getExpeditionsHTML(expeditions) {
       }
     }
   })
-
-  return result.reduce((acc, line) => acc +/*html*/`
+  let resultHTML = result.reduce((acc, line) => acc +/*html*/`
     <div class="card expedition">
       <div class="lineInfo">
         <p class="lineNo">${line.lineNo}</p>
@@ -179,7 +178,14 @@ function getExpeditionsHTML(expeditions) {
         </div>
       </div>
       
-    </div>`, "")
+    </div>
+  `, "")
+
+  return /*html*/`
+    <div class="cardContainer">
+      ${resultHTML}
+    </div>
+  `
 }
 
 function newLineButton(props) {
