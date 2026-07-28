@@ -34,7 +34,7 @@ let ls = {
     remove: (lineNo) => {
       let favLines = ls.getObj("favLines");
       if (lineNo in favLines) {
-        delete ls.favLines.list.lineNo;
+        delete favLines[lineNo];
         ls.setObj("favLines", favLines);
       }
     }
@@ -106,7 +106,13 @@ async function fetchLinesList() {
   return (await res.json()).data;
 }
 
+function onFavDelete(lineNo) {
+  ls.favLines.remove(lineNo);
+  location.reload();
+}
+
 function getExpeditionsHTML(expeditions) {
+
   let result = [];
 
   let lsFavLines = ls.favLines.get();
@@ -130,7 +136,6 @@ function getExpeditionsHTML(expeditions) {
       }
     }
   })
-
 
   return result.reduce((acc, line) => acc +/*html*/`
     <div class="card expedition">
@@ -158,7 +163,7 @@ function getExpeditionsHTML(expeditions) {
         </div>
         <div class="controls">
           <button>⇄</button>
-          <button>✖️</button>
+          <button onclick="onFavDelete(${line.lineNo})">✖️</button>
         </div>
       </div>
       
