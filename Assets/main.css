@@ -73,6 +73,7 @@ body {
     flex-grow: 1;
     overflow-y: auto;
     position: relative;
+    padding-bottom: 10vh;
 
     >.newLineButton {
       border-radius: 50%;
@@ -122,6 +123,11 @@ body {
   min-height: 12vh;
   flex-direction: column;
 
+  >hr {
+    opacity: 20%;
+    border-radius: 2vh;
+  }
+
   >.lineInfo {
     display: flex;
 
@@ -131,7 +137,7 @@ body {
 
     >.lineNo {
       font-weight: bold;
-      background-color: #333;
+      background-color: #538;
       color: #ddd;
       padding: 1vh;
       border-radius: 1vh;
@@ -148,7 +154,7 @@ body {
     display: flex;
     margin-top: 1vh;
 
-    >.ways {
+    >.detail {
       display: flex;
       flex-grow: 1;
 
@@ -169,7 +175,16 @@ body {
           font-size: 0.95rem;
           font-variant-numeric: tabular-nums;
           display: flex;
-          flex-direction: column;
+
+          >p {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+
+            >span:first-of-type {
+              font-weight: bold;
+            }
+          }
         }
       }
     }
@@ -182,11 +197,12 @@ body {
         height: 5vh;
         width: 5vh;
         margin: 1vh;
-        padding: 1vh;
         border-radius: 1vh;
         background: none;
         border: none;
         box-shadow: 0 0 2px 1px #666;
+        font-size: 1.125rem;
+        text-align: center;
       }
     }
   }

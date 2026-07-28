@@ -140,25 +140,25 @@ function getExpeditionsHTML(expeditions) {
       </div>
       <hr/>
       <div class="innerExpedition">
-        <div class="ways">
+        <div class="detail">
           <div class="start ${lsFavLines[line.lineNo].isPrefersStart ? "" : "hidden"}">
             <p class="name">${line.start.name} Yönü</p>
             <div class="hours">
-              <p><span>Sıradaki:</span> <span>${line.start.hours[0] || "-"}</span></p>
-              <p><span>Sonraki:</span> <span>${line.start.hours[1] || "-"}</span></p>
+              <p><span>Sıradaki</span> <span>${line.start.hours[0] || "-"}</span></p>
+              <p><span>Sonraki</span> <span>${line.start.hours[1] || "-"}</span></p>
             </div>
           </div>
           <div class="end ${lsFavLines[line.lineNo].isPrefersStart ? "hidden" : ""}">
             <p class="name">${line.end.name} Yönü</p>
             <div class="hours">
-              <p><span>Sıradaki:</span> <span>${line.end.hours[0] || "-"}</span></p>
-              <p><span>Sonraki:</span> <span>${line.end.hours[1] || "-"}</span></p>
+              <p><span>Sıradaki</span> <span>${line.end.hours[0] || "-"}</span></p>
+              <p><span>Sonraki</span> <span>${line.end.hours[1] || "-"}</span></p>
             </div>
           </div>
         </div>
         <div class="controls">
-          <button>🔁</button>
-          <button>❌</button>
+          <button>⇄</button>
+          <button>✖️</button>
         </div>
       </div>
       
