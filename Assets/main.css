@@ -63,19 +63,16 @@ body {
     border-bottom: 1px solid #999;
     flex-grow: 1;
     overflow-y: auto;
-    position: relative;
     padding-bottom: 10vh;
+    border: 1px solid red;
 
     >.newLineButton {
       border-radius: 50%;
       width: 7vh;
       height: 7vh;
-      position: fixed;
       border: none;
       background: none;
       box-shadow: 0 0 4px 2px #222;
-      bottom: 5vh;
-      right: 3vh;
       text-align: center;
       font-weight: bold;
       appearance: none;
@@ -94,14 +91,15 @@ body {
 
 
   nav {
+    padding: 2vh 0;
 
     >a {
       font-size: 2vh;
       background-color: #538;
-      padding: 2vh;
       color: #ddd;
       border-radius: 1vh;
-      margin: 2vh 0;
+      margin: 1vh 0;
+      padding: 1vh;
     }
   }
 }
