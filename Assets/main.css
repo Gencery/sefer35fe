@@ -106,7 +106,7 @@ body {
 
 .card {
   border-radius: 2vh;
-  margin: 2vh 1vh;
+  margin: 1vh 1vh 3vh 1vh;
   background-color: #ddd;
 }
 
@@ -194,7 +194,7 @@ body {
         border-radius: 1vh;
         background: none;
         border: none;
-        box-shadow: 0 0 2px 1px #666;
+        box-shadow: 0 2px 7px -1px #666;
         font-size: 1.125rem;
         text-align: center;
       }
