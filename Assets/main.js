@@ -37,6 +37,13 @@ let ls = {
         delete favLines[lineNo];
         ls.setObj("favLines", favLines);
       }
+    },
+    changeLineDir: (lineNo) => {
+      let favLines = ls.getObj("favLines");
+      if (lineNo in favLines) {
+        favLines[lineNo] = { isPrefersStart: !favLines[lineNo].isPrefersStart }
+        ls.setObj("favLines", favLines);
+      }
     }
   },
 }
@@ -111,6 +118,11 @@ function onFavDelete(lineNo) {
   location.reload();
 }
 
+function onFavLineDirChange(lineNo) {
+  ls.favLines.changeLineDir(lineNo);
+  location.reload();
+}
+
 function getExpeditionsHTML(expeditions) {
 
   let result = [];
@@ -162,7 +174,7 @@ function getExpeditionsHTML(expeditions) {
           </div>
         </div>
         <div class="controls">
-          <button>⇄</button>
+          <button onclick="onFavLineDirChange(${line.lineNo})">⇄</button>
           <button onclick="onFavDelete(${line.lineNo})">✖️</button>
         </div>
       </div>
