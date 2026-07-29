@@ -64,7 +64,6 @@ body {
     border-bottom: 1px solid #999;
     overflow-y: auto;
     padding-bottom: 10vh;
-    border: 1px solid red;
 
     >.cardContainer {}
 
