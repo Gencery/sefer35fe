@@ -48,6 +48,7 @@ body {
   background-color: #eee;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   header {
     margin: 1vh 0;
@@ -64,7 +65,6 @@ body {
     overflow-y: auto;
     padding-bottom: 10vh;
     border: 1px solid red;
-    position: relative;
 
     >.cardContainer {}
 
@@ -78,8 +78,9 @@ body {
       text-align: center;
       font-weight: bold;
       appearance: none;
-      right: 1vh;
-      bottom: -1vh;
+      position: absolute;
+      right: 3vh;
+      bottom: 10vh;
       z-index: 1;
       background-color: #eee;
 
