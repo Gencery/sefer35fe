@@ -1,3 +1,15 @@
+//update fix for favlines local storage
+{
+  let favLines = ls.favLines.get();
+  for (lineNo in favLines) {
+    if (!favLines[lineNo].hasOwnProperty("isPrefersStart")) {
+      localStorage.clear();
+      break;
+    }
+  }
+}
+
+
 let beServer = "";
 
 if (location.host == "sefer35.com") {
