@@ -294,11 +294,7 @@ async function start() {
 start()
 
 //update fix for favlines local storage
-
-let favLines = ls.favLines.get();
-for (lineNo in favLines) {
-  if (!favLines[lineNo].hasOwnProperty("isPrefersStart")) {
-    localStorage.clear();
-    break;
-  }
+if (!localStorage.getItem("isUpdated")) {
+  localStorage.clear();
+  localStorage.setItem("isUpdated", true);
 }
