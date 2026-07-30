@@ -1,3 +1,13 @@
+//update fix for favlines local storage
+let favLines = JSON.parse(localStorage.getItem("favLines"));
+for (lineNo in favLines) {
+  if (!(isPrefersStart in favLines[lineNo])) {
+    localStorage.clear();
+    break;
+  }
+}
+
+
 let beServer = "";
 
 if (location.host == "sefer35.com") {
@@ -293,8 +303,3 @@ async function start() {
 
 start()
 
-//update fix for favlines local storage
-if (!localStorage.getItem("isUpdated")) {
-  localStorage.clear();
-  localStorage.setItem("isUpdated", true);
-}
