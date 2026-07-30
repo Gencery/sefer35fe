@@ -1,10 +1,7 @@
 //update fix for favlines local storage
-let favLines = JSON.parse(localStorage.getItem("favLines"));
-for (lineNo in favLines) {
-  if (!(isPrefersStart in favLines[lineNo])) {
-    localStorage.clear();
-    break;
-  }
+if (!localStorage.getItem("isUpdated")) {
+  localStorage.clear();
+  localStorage.setItem("isUpdated", true);
 }
 
 
