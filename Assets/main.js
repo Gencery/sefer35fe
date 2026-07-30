@@ -180,8 +180,8 @@ function getExpeditionsHTML(expeditions) {
           </div>
         </div>
         <div class="controls">
-          <button onclick="onFavLineDirChange(${line.lineNo})">⇄</button>
-          <button onclick="onFavDelete(${line.lineNo})">✖️</button>
+          <button onclick="onFavLineDirChange(${line.lineNo})"><img src="./Assets/img/change.png" alt="Yön Değiştir"></button>
+          <button onclick="onFavDelete(${line.lineNo})"><img src="./Assets/img/cross.png" alt="Favorilerden Sil"></button>
         </div>
       </div>
       
