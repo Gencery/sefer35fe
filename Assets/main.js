@@ -251,7 +251,7 @@ let pages = {
 
     return [
       strToNode(expeditionsHTML),
-      ComboBox(linesListArr, onLineSelect, { id: "linesCombo", class: "comboBox hidden", placeholder: "Hat No, Hat Adı giriniz..." }),
+      ComboBox(linesListArr, onLineSelect, { id: "linesCombo", class: "comboBox hidden", placeholder: "Hat No, Hat Adı giriniz... 🔍" }),
       newLineButton({ class: "newLineButton" })
     ]
   }
