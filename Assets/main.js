@@ -111,8 +111,8 @@ function ComboBox(optionsArr, onselectfn, props) {
   })
 
   comboBox.appendChild(comboBoxExitArea);
-  comboBoxInnerContainer.appendChild(optionsContainer);
   comboBoxInnerContainer.appendChild(comboBoxSearchArea);
+  comboBoxInnerContainer.appendChild(optionsContainer);
 
   return [comboBox];
 }
