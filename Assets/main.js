@@ -125,9 +125,14 @@ function onFavDelete(lineNo) {
   location.reload();
 }
 
-function onFavLineDirChange(lineNo) {
+function onFavLineDirChange(lineNo, event) {
   ls.favLines.changeLineDir(lineNo);
-  location.reload();
+
+  let buttonClicked = event.target;
+  let detailDiv = buttonClicked.closest(".innerExpedition").getElementsByClassName("detail")[0];
+
+  [...(detailDiv.children)].forEach(dir => dir.classList.toggle("hidden"));
+
 }
 
 function getExpeditionsHTML(expeditions) {
@@ -167,20 +172,20 @@ function getExpeditionsHTML(expeditions) {
           <div class="start ${lsFavLines[line.lineNo].isPrefersStart ? "" : "hidden"}">
             <p class="name">${line.start.name} Yönü</p>
             <div class="hours">
-              <p><span>Sıradaki</span> <span>${line.start.hours[0] || "-"}</span></p>
-              <p><span>Sonraki</span> <span>${line.start.hours[1] || "-"}</span></p>
+              <p><span>Sıradaki</span><span>${line.start.hours[0] || "-"}</span></p>
+              <p><span>Sonraki</span><span>${line.start.hours[1] || "-"}</span></p>
             </div>
           </div>
           <div class="end ${lsFavLines[line.lineNo].isPrefersStart ? "hidden" : ""}">
             <p class="name">${line.end.name} Yönü</p>
             <div class="hours">
-              <p><span>Sıradaki</span> <span>${line.end.hours[0] || "-"}</span></p>
-              <p><span>Sonraki</span> <span>${line.end.hours[1] || "-"}</span></p>
+              <p><span>Sıradaki</span><span>${line.end.hours[0] || "-"}</span></p>
+              <p><span>Sonraki</span><span>${line.end.hours[1] || "-"}</span></p>
             </div>
           </div>
         </div>
         <div class="controls">
-          <button onclick="onFavLineDirChange(${line.lineNo})"><img src="./Assets/img/reverse-direction.svg" alt="Yön Değiştir"></button>
+          <button onclick="onFavLineDirChange(${line.lineNo}, event)"><img src="./Assets/img/reverse-direction.svg" alt="Yön Değiştir"></button>
           <button onclick="onFavDelete(${line.lineNo})"><img src="./Assets/img/close.svg" alt="Favorilerden Sil"></button>
         </div>
       </div>
