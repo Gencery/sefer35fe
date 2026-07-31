@@ -98,6 +98,8 @@ function ComboBox(optionsArr, onselectfn, props) {
     options.forEach(option => option.classList.add("hidden"));
     let validOptions = options.filter(option => option.innerText.includes(input.value.toLocaleUpperCase('tr-TR')));
     validOptions.forEach(option => option.classList.remove("hidden"));
+
+    options.filter(item => ![...item.classList].includes("hidden"))[0].scrollIntoView({ block: "start" });
   })
 
   //options

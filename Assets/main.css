@@ -71,6 +71,7 @@ body {
     overflow-y: auto;
     padding-bottom: 10vh;
     flex-grow: 1;
+    border-radius: 1vh;
 
     >.cardContainer {}
 
@@ -89,6 +90,7 @@ body {
       bottom: 10vh;
       z-index: 1;
       background-color: #eee;
+      color: var(--main_clr);
 
     }
 
