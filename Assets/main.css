@@ -207,7 +207,7 @@ body {
         justify-content: center;
 
         >img {
-          width: 50%;
+          width: 66%;
           object-fit: contain;
         }
       }
