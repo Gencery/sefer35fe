@@ -170,14 +170,14 @@ function getExpeditionsHTML(expeditions) {
       <div class="innerExpedition">
         <div class="detail">
           <div class="start ${lsFavLines[line.lineNo].isPrefersStart ? "" : "hidden"}">
-            <p class="name">${line.start.name} Yönü</p>
+            <p class="name">${line.start.name} Kalkış</p>
             <div class="hours">
               <p><span>Sıradaki</span><span>${line.start.hours[0] || "-"}</span></p>
               <p><span>Sonraki</span><span>${line.start.hours[1] || "-"}</span></p>
             </div>
           </div>
           <div class="end ${lsFavLines[line.lineNo].isPrefersStart ? "hidden" : ""}">
-            <p class="name">${line.end.name} Yönü</p>
+            <p class="name">${line.end.name} Kalkış</p>
             <div class="hours">
               <p><span>Sıradaki</span><span>${line.end.hours[0] || "-"}</span></p>
               <p><span>Sonraki</span><span>${line.end.hours[1] || "-"}</span></p>
