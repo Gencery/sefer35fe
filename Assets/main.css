@@ -257,7 +257,7 @@ body {
     z-index: 2;
 
     .searchArea {
-      min-height: 5vh;
+      min-height: 3rem;
       margin-top: 5%;
       border-radius: 1vh;
       border: none;
@@ -287,7 +287,7 @@ body {
         border-radius: 1vh;
         margin: 1vh 0;
         padding: 1vh;
-        box-shadow: 0 0 7px -2px var(--main_clr);
+        box-shadow: 0 0 5px -2px var(--main_clr);
       }
     }
 
