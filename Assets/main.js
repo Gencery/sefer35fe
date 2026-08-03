@@ -122,9 +122,9 @@ async function fetchLinesList() {
   return (await res.json()).data;
 }
 
-function onFavDelete(lineNo) {
+function onFavDelete(lineNo, event) {
   ls.favLines.remove(lineNo);
-  location.reload();
+  event.target.closest(".card").remove();
 }
 
 function onFavLineDirChange(lineNo, event) {
@@ -188,7 +188,7 @@ function getExpeditionsHTML(expeditions) {
         </div>
         <div class="controls">
           <button onclick="onFavLineDirChange(${line.lineNo}, event)"><img src="./Assets/img/reverse-direction.svg" alt="Yön Değiştir"></button>
-          <button onclick="onFavDelete(${line.lineNo})"><img src="./Assets/img/close.svg" alt="Favorilerden Sil"></button>
+          <button onclick="onFavDelete(${line.lineNo}, event)"><img src="./Assets/img/close.svg" alt="Favorilerden Sil"></button>
         </div>
       </div>
       
@@ -207,7 +207,10 @@ function newLineButton(props) {
   addPropsToElem(newLineButton, props);
   newLineButton.innerText = "Ekle";
   newLineButton.addEventListener("click", () => {
-    document.getElementById("linesCombo").classList.toggle("hidden");
+
+    let linesCombo = document.getElementById("linesCombo");
+    linesCombo.classList.toggle("hidden");
+    linesCombo.getElementsByClassName("searchArea")[0].focus();
   })
   return [newLineButton];
 }
