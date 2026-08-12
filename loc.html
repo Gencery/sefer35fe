@@ -30,18 +30,42 @@
   </main>
   <script>
     // initialize the map on the "map" div with a given center and zoom
-    var map = L.map('map').setView([38.5, 27.125], 11);
+    var map = L.map('map').setView([38.44, 27.25], 12);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    fetch("https://www.eshot.gov.tr/tr/UlasimSaatleri/HattinDuraklariniGetir/?hatId=505&hatYon=2")
+    fetch("./Assets/duraklar_505.json")
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        data.forEach(item => L.marker([item.Enlem, item.Boylam]).addTo(map))
+
+        data.forEach(item => {
+
+          let coord = [item.Enlem, item.Boylam];
+          coord = coord.map(item => item.replace(",", "."));
+
+          L.marker(coord, {
+            icon: L.divIcon({
+              html: `${item.DurakId} - ${item.Adi}`,
+              iconSize: "auto"
+            })
+          }).addTo(map);
+        })
       })
+
+    fetch("https://openapi.izmir.bel.tr/api/iztek/hatotobuskonumlari/505")
+      .then(res => res.json())
+      .then(data => {
+
+        data.HatOtobusKonumlari.filter(item => item.Yon == 0).forEach(item => {
+
+          let coord = [item.KoorX, item.KoorY];
+          coord = coord.map(item => item.replace(",", "."));
+
+          L.marker(coord).addTo(map)
+        })
+      })
+
 
   </script>
 </body>
