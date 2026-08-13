@@ -66,6 +66,23 @@
         })
       })
 
+    fetch("./Assets/path_505.json")
+      .then(res => res.json())
+      .then(data => {
+
+        data = data.map(item => {
+          return item.map(coordPnt => parseFloat(coordPnt)).reverse()
+        })
+        // 2. Create the line with custom styles and add it to the map
+        var polyline = L.polyline(data, {
+          color: 'red',
+          weight: 3,
+          opacity: 0.7,
+          smoothFactor: 1
+        }).addTo(map);
+
+      })
+
 
   </script>
 </body>
