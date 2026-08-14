@@ -85,6 +85,49 @@
 
 
   </script>
+  <script>
+    function calcDistOfTwoPnts(pnt1, pnt2) {
+      return Math.sqrt(Math.pow(pnt1.x - pnt2.x, 2) + Math.pow(pnt1.y - pnt2.y, 2))
+    }
+
+
+    setTimeout(async () => {
+      let stations = await fetch("./Assets/duraklar_505_sade.json")
+        .then(res => res.json());
+
+      let busPositions = await fetch("https://openapi.izmir.bel.tr/api/iztek/hatotobuskonumlari/505")
+        .then(res => res.json())
+        .then(data => data.HatOtobusKonumlari.filter(item => item.Yon == 0).map(item => {
+          return {
+            ...item,
+            KoorX: parseFloat(item.KoorX.replace(",", ".")),
+            KoorY: parseFloat(item.KoorY.replace(",", "."))
+          }
+        }));
+
+      let closestBusStationsPerBus = [];
+
+
+      for (let busPosition of busPositions) {
+        let index = busPositions.indexOf(busPosition);
+        let smallestDistance = [stations[0].adi, calcDistOfTwoPnts({ x: busPosition.KoorX, y: busPosition.KoorY }, stations[0])];
+
+        for (let station of stations) {
+          let distance = calcDistOfTwoPnts({ x: busPosition.KoorX, y: busPosition.KoorY }, station);
+          if (smallestDistance[1] > distance) {
+            smallestDistance = [station.adi, distance];
+            closestBusStationsPerBus[index] = (smallestDistance);
+          }
+        }
+      }
+
+      console.log(closestBusStationsPerBus.filter(item => item[1] < 0.005).map(item => [item[0], parseInt(item[1] * 111000)]));
+    }, 1000)
+
+
+
+
+  </script>
 </body>
 
 </html>
