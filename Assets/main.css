@@ -48,6 +48,8 @@ body {
   margin: 0 auto;
   height: 100svh;
   max-width: 500px;
+  max-width: 30%;
+  min-width: 375px;
   padding: 1vh;
   border: 1px solid transparent;
   background-color: #eee;
@@ -220,6 +222,12 @@ body {
         }
       }
     }
+  }
+
+  >.lastUpdated {
+    margin: 1vh;
+    font-weight: bold;
+    font-size: 0.75rem;
   }
 }
 

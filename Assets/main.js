@@ -151,6 +151,7 @@ function getExpeditionsHTML(expeditions) {
 
     return {
       lineNo: lineNo,
+      lastFetched: expeditions[lineNo].lastFetched,
       start: {
         name: expeditions[lineNo].directions.start.name,
         hours: expeditions[lineNo].directions.start.expeditions
@@ -191,7 +192,7 @@ function getExpeditionsHTML(expeditions) {
           <button onclick="onFavDelete(${line.lineNo}, event)"><img src="./Assets/img/close.svg" alt="Favorilerden Sil"></button>
         </div>
       </div>
-      
+      <p class="lastUpdated">Son güncelleme: ${line.lastFetched.date} - ${line.lastFetched.time}</p>
     </div>
   `, "")
 
