@@ -225,9 +225,10 @@ body {
   }
 
   >.lastUpdated {
-    margin: 1vh;
+    margin: 0.5vh;
+    margin-left: 1vh;
     font-weight: bold;
-    font-size: 0.75rem;
+    font-size: 0.80rem;
   }
 }
 
